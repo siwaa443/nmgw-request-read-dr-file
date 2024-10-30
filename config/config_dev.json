@@ -1,0 +1,68 @@
+{
+    "cold": {
+        "kafka": {
+            "consumer": {
+                "enable": true,
+                "brokers": [
+                    "10.138.41.195:9092",
+                    "10.138.41.196:9092",
+                    "10.138.41.197:9092"
+                ],
+                "topics": {
+                    "drReport": [
+                        "Dev-BulkNormal-Report"
+                    ],
+                    "mtReport": [
+                        "Dev-BulkNormal"
+                    ]
+                },
+                "groupName": "group-Dev-BulkNormal-Report",
+                "offsetPath": "./logs/offset"
+            },
+            "producer": {
+                "enable": true,
+                "brokers": [
+                    "10.138.41.195:9092",
+                    "10.138.41.196:9092",
+                    "10.138.41.197:9092"
+                ],
+                "cdrTopic": "Dev-BulkNormal-CDR",
+                "refundTopic": "Dev-BulkNormal-SCF",
+                "failMessage": {
+                    "path": "./logs/fail",
+                    "format": "%Y%m%d%H%M",
+                    "rotate": "5m"
+                }
+            }
+        },
+        "mongo": {
+            "enable": true,
+            "uri": "mongodb://bulksmsApp:password@10.138.41.195:27017,10.138.41.196:27017,10.138.41.197:27017/?authSource=bulksms&replicaSet=nmgw",
+            "dbname": "bulksms",
+            "collection": {
+                "partnerProfile": "dev_profile"
+            }
+        }
+    },
+    "warm": {
+        "log": {
+            "enable": true,
+            "path": "./logs/log",
+            "format": "%Y%m%d%H%M",
+            "level": "info",
+            "rotate": "1h"
+        },
+        "dr": {
+            "enable": true,
+            "path": "./logs/dr_dev/${profileId}/%Y%m%d",
+            "format": "${profileId}_%Y%m%d%H%M",
+            "rotate": "1h"
+        },
+        "mt": {
+            "enable": true,
+            "path": "./logs/mt_dev",
+            "maxRecords": 10,
+            "rotate": "5m"
+        }
+    }
+}
